@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import confetti from 'canvas-confetti'
 
 import { Square } from './components/Square'
@@ -22,11 +22,6 @@ function App() {
     })
 
     const [winner, setWinner] = useState(null)
-   
-    useEffect(() => {
-        console.log('useEffect')
-    }, [winner])
-
 
     const updateBoard = (index) => {
         // revisa si la casilla ya esta marcada o existe un ganador
