@@ -10,3 +10,32 @@
     border-color: #1b0242;
     border-radius: 25%;
 }
+
+.card .flipped {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+}
+
+.card .unflipped {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+}
+
+.card .front { 
+    transform: rotateY(90deg);  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+
+}
+
+.flipped .front {
+    transform: rotateY(0deg);
+}

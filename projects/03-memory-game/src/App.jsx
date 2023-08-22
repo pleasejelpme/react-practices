@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import confetti from 'canvas-confetti'
 import './App.css'
 
 import { CARDS } from './constants/constants'
@@ -13,7 +14,11 @@ function App() {
   const [turn, setTurn] = useState(0)
 
   useEffect(() => {
+    const prevCards = cards
+    if (checkWin(prevCards)) return 
+  }, [cards])
 
+  useEffect(() => {
     const cleanValues = () => {
       setChoiceOne(null)
       setChoiceTwo(null)
@@ -21,8 +26,11 @@ function App() {
       setTurn(newTurn)
     }
 
+    // const prevCards = cards
+    // if (prevCards.every(element => element.match === true)) return confetti()
+
     if (choiceOne && choiceTwo) {
-      if (choiceOne.emoji === choiceTwo.emoji) {
+      if (choiceOne.emoji === choiceTwo.emoji && choiceOne.id !== choiceTwo.id) {
         setCards(prevCards => {
           return prevCards.map( card => {
             return card.emoji === choiceOne.emoji ? {...card, match: true} : card
@@ -32,7 +40,12 @@ function App() {
       }
       cleanValues()
     }
-  }, [choiceOne, choiceTwo, turn])
+  }, [choiceOne, choiceTwo, turn, cards])
+
+  const checkWin = (element) => {
+    if (element.every(item => item.match === true)) return confetti()
+  }
+
 
   // Takes the array of emojis, duplicates it and then shuffle it
   const randomizeCards = () => {
@@ -42,6 +55,7 @@ function App() {
 
     setCards(shuffledCards)
     setTurn(0)
+    console.log(shuffledCards)
   } 
 
   const handleChoice = (card) => {
@@ -59,7 +73,7 @@ function App() {
             key={card.id} 
             card={card} 
             handleChoice={handleChoice} 
-            isSelected={ card === choiceOne || card === choiceTwo || card.matched } />
+            isSelected={ card === choiceOne || card === choiceTwo|| card.match } />
         ))}
       </div>
     </div>
